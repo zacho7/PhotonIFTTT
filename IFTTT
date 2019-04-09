@@ -1,0 +1,20 @@
+int photosensor = A0;
+
+int lightvalue;
+
+char lightval[4];
+
+void setup() {
+    pinMode(photosensor,INPUT);
+}
+
+void loop() {
+  lightvalue = analogRead(photosensor);
+
+  if(lightvalue < 250) Particle.publish("Light Strength", "Low", PRIVATE);
+  if(lightvalue >= 250 and lightvalue < 500) Particle.publish("Light Strength", "Med", PRIVATE);
+  if(lightvalue >= 500) Particle.publish("Light Strength", "High", PRIVATE);
+
+  sprintf(lightval,"%d", lightvalue);
+  Particle.publish("lights", lightval, PRIVATE);
+  delay(15000);         
